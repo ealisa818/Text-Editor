@@ -13,8 +13,9 @@ const initdb = async () =>
   });
 
 // TODO: Add logic to a method that accepts some content and adds it to the database
-export const putDb = async (content) => console.error('putDb not implemented');
-  const jateDb = await open('Jate', '1');
+export const putDb = async (content) => { console.log('putDb not implemented');
+  
+const jateDb = await openDB('jate', '1');
 
   const tx = jateDb.transaction('jate', 'readwrite');
 
@@ -23,31 +24,36 @@ export const putDb = async (content) => console.error('putDb not implemented');
   const request = store.put()({ jate:content});
 
   const result = await request;
-  console.log("Data saved to the database")
+  console.log("Data saved to the database", result);
+
+return result;
+};
 
 // TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => console.error('getDb not implemented');
+export const getDb = async (content) => {console.log('getDb not implemented');
 
-  const jateDb = await open('Jate', '1');
+const jateDb = await openDb('jate', '1');
 
-  const tx = jateDb.transaction('jate', 'readwrite');
+  const tx = jateDb.transaction('jate', 'readonly');
   
   const store = tx.objectStore('jate');
 
-  const request = store.get() ({ jate:content });
+  const request = store.get(1);
 
-  const rewult = await request;
-  console.log("getDb implemented");
+  const result = await request;
+  console.log("getDb implemented", result);
+  return result.value;
+};
 
 initdb();
 
 // TODO: Add logic to a method that accepts some content and adds it to the database
-export const putDb = async (content) => {
-  console.log('Post');
+export const jateDb = async (content) => {
+  console.log('Put');
 
-  const jateDb = await open('jate', '1');
+  const jateDb = await openDb('jate', '1');
 
-  const tx = jateDb.transaction('jate', 'readwrite');
+  const tx = jateDb.transaction('jate', 'writeonly');
 
   const store = tx.objectStore('jate');
 
@@ -55,3 +61,4 @@ export const putDb = async (content) => {
   const result = await request
   console.log("Data posted");
   };
+
